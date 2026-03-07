@@ -3,6 +3,10 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+  // Habilita o parsing de JSON no body das requisições
+  app.use(require('express').json());
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

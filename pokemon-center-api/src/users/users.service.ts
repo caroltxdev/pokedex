@@ -18,4 +18,18 @@ export class UsersService {
       data,
     });
   }
+
+  // Busca usuário por id - usado no /users/me
+  async findById(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        nome: true,
+        createdAt: true,
+        // senha não é retornada por segurança!
+      },
+  });
+}
 }

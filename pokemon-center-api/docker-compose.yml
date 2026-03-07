@@ -1,0 +1,15 @@
+services:
+  pokemon-banco:
+    image: postgres:15 #usando versão fixa (15) para evitar problemas de compatibilidade/surpresas futuras
+    container_name: pokemon-banco
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes: #persistindo os dados mesmo que o container seja destruído
+      - postgres_data:/var/lib/postgresql/data
+
+volumes: #definindo o volume para persistência dos dados do banco de dados
+  postgres_data:

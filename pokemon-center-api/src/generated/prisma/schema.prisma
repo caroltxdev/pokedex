@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  nome      String
+  senha     String
+  createdAt DateTime @default(now())
+
+  pokemons Pokemon[] //um user tem muitos pokemons
+}
+
+model Pokemon {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  nome          String
+  tipo          String
+  nivel         Int
+  hp            Int
+  numeroPokedex Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id]) //campo virtual que o prisma usa pra fazer o join
+}

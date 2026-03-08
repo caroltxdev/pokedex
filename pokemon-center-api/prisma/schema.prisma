@@ -14,7 +14,7 @@ model User {
   senha     String
   createdAt DateTime @default(now())
 
-  pokemons  Pokemon[] //um user tem muitos pokemons
+  pokemons  Pokemon[]
 }
 
 model Pokemon {
@@ -27,5 +27,7 @@ model Pokemon {
   numeroPokedex Int
 
   userId        String
-  user          User     @relation(fields: [userId], references: [id]) //campo virtual que o prisma usa pra fazer o join
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

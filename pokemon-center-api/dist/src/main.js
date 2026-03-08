@@ -8,6 +8,7 @@ async function bootstrap() {
         origin: [
             'http://localhost:3000',
             'https://pokedex-9t5b.vercel.app',
+            'https://pokedex-mu-green.vercel.app',
         ],
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],

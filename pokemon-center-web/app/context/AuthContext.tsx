@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, senha: string) => {
-    const res = await fetch('http://localhost:3000/auth/login', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, senha }),
@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const data = await res.json();
     
     // Busca dados do usuário logado
-    const userRes = await fetch('http://localhost:3000/users/me', {
+    const userRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
       headers: { Authorization: `Bearer ${data.token}` },
     });
     const userData = await userRes.json();
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const register = async (email: string, nome: string, senha: string) => {
-    const res = await fetch('http://localhost:3000/auth/register', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, nome, senha }),
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const data = await res.json();
 
     // Busca dados do usuário recém criado
-    const userRes = await fetch('http://localhost:3000/users/me', {
+    const userRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
       headers: { Authorization: `Bearer ${data.token}` },
     });
     const userData = await userRes.json();

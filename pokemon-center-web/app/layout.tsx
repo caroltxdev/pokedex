@@ -5,6 +5,9 @@ import { AuthProvider } from "./context/AuthContext";
 export const metadata: Metadata = {
   title: "PokéCenter Admin",
   description: "Sistema de gerenciamento de Pokémons",
+  icons: {
+    icon: "/Pokeball.png",
+  },
 };
 
 export default function RootLayout({
@@ -14,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body>
+      <body className="particles-bg">
         <AuthProvider>
           {children}
         </AuthProvider>

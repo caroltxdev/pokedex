@@ -1,11 +1,12 @@
 'use client';
-
+// Aqui eu criei a página de registro, que é bem similar à de login, mas com campos adicionais para nome e confirmação de senha. Ela utiliza a função de registro do AuthContext e tem validações básicas para garantir que as senhas coincidam e tenham um comprimento mínimo. Após o registro bem-sucedido, o usuário é redirecionado para o dashboard.
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import Link from 'next/link';
 
 export default function RegisterPage() {
+  const [showSenha, setShowSenha] = useState(false);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -86,32 +87,53 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div>
+          <div className="relative"> {/*Campo que mostra ou esconde a senha*/}
             <label className="font-pixel text-xs mb-2 block" style={{ color: 'var(--purple-secondary)' }}>
               SENHA
             </label>
             <input
-              type="password"
+              type={showSenha ? 'text' : 'password'}
               placeholder="Mínimo 6 caracteres"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               className="glass-input rounded-xl px-4 py-3 outline-none w-full"
               required
             />
+
+            <button
+          type="button"
+          onClick={() => setShowSenha(!showSenha)}
+          className="absolute right-3 top-2/3 -translate-y-1/2"
+          style={{ color: 'var(--text-secondary)' }}
+            >
+          {showSenha ? '🙈' : '👁️'}
+        </button>
+
           </div>
 
-          <div>
+          <div className="relative"> {/*Campo que mostra ou esconde a senha de confirmação*/}
+
             <label className="font-pixel text-xs mb-2 block" style={{ color: 'var(--purple-secondary)' }}>
               CONFIRMAR SENHA
             </label>
             <input
-              type="password"
+              type={showSenha ? 'text' : 'password'}
               placeholder="Digite a senha novamente"
               value={confirmarSenha}
               onChange={(e) => setConfirmarSenha(e.target.value)}
               className="glass-input rounded-xl px-4 py-3 outline-none w-full"
               required
             />
+
+          <button
+          type="button"
+          onClick={() => setShowSenha(!showSenha)}
+          className="absolute right-3 top-2/3 -translate-y-1/2"
+          style={{ color: 'var(--text-secondary)' }}
+          >
+          {showSenha ? '🙈' : '👁️'}
+        </button>
+            
           </div>
 
           {error && (

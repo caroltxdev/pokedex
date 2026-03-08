@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import Link from 'next/link';
-
+// Essa é a página de login, onde o usuário pode inserir seu email e senha para acessar o dashboard. Ela utiliza o contexto de autenticação para fazer o login e redirecionar para o dashboard. Também tem um link para a página de registro caso o usuário ainda não tenha uma conta.
 export default function LoginPage() {
+  const [showSenha, setShowSenha] = useState(false);
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
@@ -54,14 +55,28 @@ export default function LoginPage() {
             className="glass-input rounded-xl px-4 py-3 outline-none w-full"
             required
           />
+
+          <div className="relative"> {/*Campo que mostra ou esconde a senha*/}
+
           <input
-            type="password"
-            placeholder="Password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            className="glass-input rounded-xl px-4 py-3 outline-none w-full"
-            required
-          />
+          type={showSenha ? 'text' : 'password'}
+          placeholder="Password"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          className="glass-input rounded-xl px-4 py-3 outline-none w-full pr-12"
+          required
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowSenha(!showSenha)}
+          className="absolute right-3 top-1/2 -translate-y-1/2"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          {showSenha ? '🙈' : '👁️'}
+        </button>
+
+        </div>
 
           {error && (
             <p className="text-red-400 text-sm text-center">{error}</p>

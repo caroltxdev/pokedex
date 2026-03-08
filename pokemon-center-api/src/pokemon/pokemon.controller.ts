@@ -2,6 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request } f
 import { PokemonService } from './pokemon.service';
 import { JwtGuard } from '../auth/jwt.guard';
 
+// Todas as rotas desse controller exigem autenticação, ou seja, o cliente deve enviar um token JWT válido no header Authorization para acessar qualquer endpoint relacionado a Pokémon.
 @Controller('pokemon')
 @UseGuards(JwtGuard) // Todas as rotas desse controller exigem autenticação
 export class PokemonController {

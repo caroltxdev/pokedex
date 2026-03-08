@@ -1,9 +1,13 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { PokemonGateway } from './pokemon.gateway';
 
 @Injectable()
 export class PokemonService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private gateway: PokemonGateway,
+  ) {}
 
   // Lista todos os pokemons - rota pública, qualquer usuário logado pode ver
   async findAll() {
@@ -36,7 +40,9 @@ export class PokemonService {
     numeroPokedex: number;
     userId: string;
   }) {
-    return this.prisma.pokemon.create({ data });
+    const pokemon = await this.prisma.pokemon.create({ data });
+    this.gateway.notifyPokemonUpdated(); // notifica todos após criar
+    return pokemon;
   }
 
   // Atualiza um pokemon - verifica se o usuário é o dono
@@ -54,7 +60,9 @@ export class PokemonService {
       throw new ForbiddenException('Você não tem permissão para editar este pokemon');
     }
 
-    return this.prisma.pokemon.update({ where: { id }, data });
+    const updated = await this.prisma.pokemon.update({ where: { id }, data });
+    this.gateway.notifyPokemonUpdated(); // notifica todos após atualizar
+    return updated;
   }
 
   // Deleta um pokemon - verifica se o usuário é o dono
@@ -66,6 +74,8 @@ export class PokemonService {
       throw new ForbiddenException('Você não tem permissão para deletar este pokemon');
     }
 
-    return this.prisma.pokemon.delete({ where: { id } });
+    const deleted = await this.prisma.pokemon.delete({ where: { id } });
+    this.gateway.notifyPokemonUpdated(); // notifica todos após deletar
+    return deleted;
   }
 }
